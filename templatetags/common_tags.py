@@ -34,8 +34,13 @@ class OrRender(Node):
                 continue
             key = value.split('.')[0]
             if var := context.get(key):
-                query = '.'+'.'.join(query) if (query := value.split('.')[1:]) else ''
+                if type(var) is dict:
+                    query = '["' + query[0] + '"]'if (query := value.split('.')[1:]) else ''
+                else:
+                    query = '.' + '.'.join(query) if (query := value.split('.')[1:]) else ''
+
                 condition += f'vars["value_{i}"] or '
+                vars['value_0'] = 123
                 exec(f'vars["value_{i}"] = var{query}')
 
         condition = condition.strip(' or ')
