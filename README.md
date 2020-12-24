@@ -26,7 +26,7 @@ Add "templateteags" dit to your application and register "common_tags" in the se
 Repeat content by number of times:
 
     {% multiply <num: int> %}  
-        <Content>  
+        [Content] 
     {% endmultiply %}
 
 
@@ -36,6 +36,6 @@ Examples syntax:
     {% range <end: int> %}
     {% range <start: int> <end: int> %}
     {% range <start: int> <end: int> <step: int> %}
-    {% range <start: int> <end: int> <step: int> as <var> %}
-    {% range <start: int> <end: int> <step: int> as <var> <silent> %}
+    {% range <start: int> <end: int> <step: int> as foo %}
+    {% range <start: int> <end: int> <step: int> as foo [silent] %}
   
