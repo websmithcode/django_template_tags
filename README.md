@@ -47,7 +47,7 @@ old recording:
         {{ value_0 }}
     {% else %}
         {% if value_1 %}
-            {{ value_1 }}
+            Content string
         {% else %}
             {{ value_2 }}
         {% endif %}
@@ -55,4 +55,4 @@ old recording:
 
 new recording:
 
-    {% or value_0 value_1 value_2 %}
+    {% or value_0 "Content string" value_2 %}

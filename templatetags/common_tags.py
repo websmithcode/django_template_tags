@@ -27,6 +27,11 @@ class OrRender(Node):
         condition = ''
         vars = {'content': ''}
         for i, value in enumerate(self.values):
+            value = value.strip()
+            if value.startswith(('"', '\'')) and value.endswith(('"', '\'')):
+                value = value.strip('"').strip("'")
+                condition += f'"{value}" or '
+                continue
             key = value.split('.')[0]
             if var := context.get(key):
                 query = '.'+'.'.join(query) if (query := value.split('.')[1:]) else ''
@@ -35,7 +40,8 @@ class OrRender(Node):
 
         condition = condition.strip(' or ')
         exec(f'vars["content"] = {condition}')
-        return str(vars['content'])
+        content = str(vars['content'])
+        return content
 
 
 @register.tag(name='or')
