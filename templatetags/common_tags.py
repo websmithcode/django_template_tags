@@ -3,10 +3,11 @@ from django.template.defaulttags import CycleNode
 from django.template.base import TemplateSyntaxError
 from django.utils.safestring import SafeString
 
+
 register = Library()
 
 
-class Multiplier(Node):
+class MultiplierRender(Node):
     def __init__(self, nodelist, ratio):
         self.nodelist = nodelist
         self.ratio = ratio
@@ -18,13 +19,38 @@ class Multiplier(Node):
         return content
 
 
+class OrRender(Node):
+    def __init__(self, values):
+        self.values = values
+
+    def render(self, context):
+        condition = ''
+        vars = {'content': ''}
+        for i, value in enumerate(self.values):
+            key = value.split('.')[0]
+            if var := context.get(key):
+                query = '.'+'.'.join(query) if (query := value.split('.')[1:]) else ''
+                condition += f'vars["value_{i}"] or '
+                exec(f'vars["value_{i}"] = var{query}')
+
+        condition = condition.strip(' or ')
+        exec(f'vars["content"] = {condition}')
+        return str(vars['content'])
+
+
+@register.tag(name='or')
+def do_or_render(parser, token):
+    bits = token.split_contents()[1:]
+    return OrRender(bits)
+
+
 @register.tag
 def multiply(parser, token):
     bits = token.split_contents()
     ratio = int(bits[1])
     nodelist = parser.parse(('endmultiply', None))
     parser.next_token()
-    return Multiplier(nodelist, ratio)
+    return MultiplierRender(nodelist, ratio)
 
 
 @register.tag(name='range')
