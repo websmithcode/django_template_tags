@@ -15,7 +15,7 @@ Add "templateteags" dit to your application and register "common_tags" in the se
                 'OPTIONS': {...}
                 ],
                 'libraries': {
-                    'common_tags': 'main.templatetags.common_tags',
+                    'common_tags': 'appname.templatetags.common_tags',
                     }
                 },
             },
