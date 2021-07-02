@@ -1,3 +1,4 @@
+# Docs https://github.com/Nillkizz/django_template_tags
 from django.template import Library, Node, NodeList
 from django.template.defaulttags import CycleNode
 from django.template.base import TemplateSyntaxError
