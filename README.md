@@ -12,11 +12,11 @@ Add "templateteags" dit to your application and register "common_tags" in the se
                 'BACKEND': '...',
                 'DIRS': [...],
                 'APP_DIRS': ...,
-                'OPTIONS': {...}
-                ],
-                'libraries': {
-                    'common_tags': 'appname.templatetags.common_tags',
-                    }
+                'OPTIONS': {
+                     ...
+                     'libraries': {
+                            'common_tags': 'appname.templatetags.common_tags',
+                     }
                 },
             },
         ]
