@@ -18,43 +18,7 @@ class MultiplierRender(Node):
         for _ in range(self.ratio):
             content += self.nodelist.render(context)
         return content
-
-
-class OrRender(Node):
-    def __init__(self, values):
-        self.values = values
-
-    def render(self, context):
-        condition = ''
-        vars = {'content': ''}
-        for i, value in enumerate(self.values):
-            value = value.strip()
-            if value.startswith(('"', '\'')) and value.endswith(('"', '\'')):
-                value = value.strip('"').strip("'")
-                condition += f'"{value}" or '
-                continue
-            key = value.split('.')[0]
-            if var := context.get(key):
-                if type(var) is dict:
-                    query = '["' + query[0] + '"]'if (query := value.split('.')[1:]) else ''
-                else:
-                    query = '.' + '.'.join(query) if (query := value.split('.')[1:]) else ''
-
-                condition += f'vars["value_{i}"] or '
-                vars['value_0'] = 123
-                exec(f'vars["value_{i}"] = var{query}')
-
-        condition = condition.strip(' or ')
-        exec(f'vars["content"] = {condition}')
-        content = str(vars['content'])
-        return content
-
-
-@register.tag(name='or')
-def do_or_render(parser, token):
-    bits = token.split_contents()[1:]
-    return OrRender(bits)
-
+    
 
 @register.tag
 def multiply(parser, token):
