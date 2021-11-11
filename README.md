@@ -38,21 +38,3 @@ Examples syntax:
     {% range <start: int> <end: int> <step: int> as <var> %}
     {% range <start: int> <end: int> <step: int> as <var> [silent] %}
     
-## Or
-"or" it is simplified recording of the tag "if"-"else"
-
-old recording:
-    
-    {% if value_0 %}
-        {{ value_0 }}
-    {% else %}
-        {% if value_1 %}
-            {{ value_1 }}
-        {% else %}
-            Content string
-        {% endif %}
-    {% endif %}
-
-new recording:
-
-    {% or value_0 value_1 "Content string" %}
